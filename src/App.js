@@ -3,7 +3,10 @@ import './App.css';
 
 function App() {
   return (
-    <span>Project Star Wars Planets Search</span>
+    <div>
+      <span>Project Star Wars Planets Search</span>
+      <span>Welcome!</span>
+    </div>
   );
 }
 
