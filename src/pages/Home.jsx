@@ -9,7 +9,8 @@ function Home() {
   function handleChange({ target }) {
     const { value } = target;
     if (filters.filterByNumericValues !== undefined) {
-      setFilters({ filtersByName: { name: value }, filterByNumericValues: [...filters.filterByNumericValues] });
+      setFilters({ filtersByName: { name: value },
+        filterByNumericValues: [...filters.filterByNumericValues] });
     } else {
       setFilters({ filtersByName: { name: value } });
     }

@@ -62,9 +62,20 @@ function PlanetsProvider({ children }) {
     filterByNumericValues();
   }, [filters]);
 
+  const value = {
+    data,
+    getPlanetsAPI,
+    filters,
+    setFilters,
+    dataFilter,
+    aux,
+    setAux,
+    setDataFilter,
+  };
+
   return (
     <PlanetsContext.Provider
-      value={ { data, getPlanetsAPI, filters, setFilters, dataFilter, aux, setAux, setDataFilter } }
+      value={ value }
     >
       {children}
     </PlanetsContext.Provider>
