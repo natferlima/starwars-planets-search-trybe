@@ -1,17 +1,19 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PlanetTable from '../components/PlanetTable';
+import NumericFilters from '../components/NumericFilters';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Home() {
-  const { getPlanetsAPI, setFilters } = useContext(PlanetsContext);
-
-  useEffect(() => {
-    getPlanetsAPI();
-  }, []);
+  const { filters, setFilters, setAux } = useContext(PlanetsContext);
 
   function handleChange({ target }) {
     const { value } = target;
-    setFilters({ filtersByName: { name: value } });
+    if (filters.filterByNumericValues !== undefined) {
+      setFilters({ filtersByName: { name: value }, filterByNumericValues: [...filters.filterByNumericValues] });
+    } else {
+      setFilters({ filtersByName: { name: value } });
+    }
+    setAux(true);
   }
 
   return (
@@ -23,6 +25,7 @@ function Home() {
         name="search"
         onChange={ handleChange }
       />
+      <NumericFilters />
       <PlanetTable />
     </div>
   );

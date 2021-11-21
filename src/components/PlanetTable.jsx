@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function PlanetTable() {
-  const { data, dataFilter } = useContext(PlanetsContext);
+  const { data, dataFilter, aux } = useContext(PlanetsContext);
 
   function renderTable(array) {
     return (array.map((planet, index) => (
@@ -20,7 +20,8 @@ function PlanetTable() {
         <td>{planet.created}</td>
         <td>{planet.edited}</td>
         <td>{planet.url}</td>
-      </tr>)));
+      </tr>))
+    );
   }
 
   return (
@@ -40,7 +41,7 @@ function PlanetTable() {
         <th>Edited</th>
         <th>URL</th>
       </tr>
-      { dataFilter !== {} ? renderTable(dataFilter) : renderTable(data) }
+      {(dataFilter !== [] && aux === true) ? renderTable(dataFilter) : renderTable(data)}
     </table>
   );
 }
