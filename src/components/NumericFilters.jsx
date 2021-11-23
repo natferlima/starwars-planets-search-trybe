@@ -10,7 +10,6 @@ function NumericFilters() {
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   function handleChange({ target }) {
-    console.log(target.id);
     const { value } = target;
     if (target.id === 'column-filter') setColumn(value);
     if (target.id === 'comparison-filter') setComparison(value);
@@ -29,15 +28,24 @@ function NumericFilters() {
 
   function handleClick() {
     if (filters.filterByNumericValues !== undefined) {
-      console.log(filters.filterByNumericValues);
       const newNumericFilters = [...filters.filterByNumericValues,
         { column, comparison, value: valueNumeric }];
       setFilters({ ...filters, filterByNumericValues: newNumericFilters });
     } else {
       setFilters({ ...filters,
         filterByNumericValues: [{ column, comparison, value: valueNumeric }] });
-      console.log(filters);
     }
+  }
+
+  function renderFilters() {
+    console.log(filters.filterByNumericValues);
+    return (
+      <div>
+        {filters.filterByNumericValues.map((filter, index) => (
+          <p key={ index }>{`${filter.column} ${filter.comparison} ${filter.value}`}</p>
+        ))}
+      </div>
+    );
   }
 
   useEffect(() => {
@@ -80,6 +88,7 @@ function NumericFilters() {
       >
         Filtrar
       </button>
+      {filters.filterByNumericValues !== undefined ? renderFilters() : null}
     </div>
   );
 }

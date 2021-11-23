@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PlanetTable from '../components/PlanetTable';
 import NumericFilters from '../components/NumericFilters';
 import PlanetsContext from '../context/PlanetsContext';
+import SortColumnsFilter from '../components/SortColumnsFilter';
 
 function Home() {
   const { filters, setFilters, setAux } = useContext(PlanetsContext);
@@ -27,6 +28,7 @@ function Home() {
         onChange={ handleChange }
       />
       <NumericFilters />
+      <SortColumnsFilter />
       <PlanetTable />
     </div>
   );
