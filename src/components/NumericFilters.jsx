@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function NumericFilters() {
@@ -6,6 +6,8 @@ function NumericFilters() {
   const [column, setColumn] = useState();
   const [comparison, setComparison] = useState();
   const [valueNumeric, setValueNumeric] = useState();
+  const [columnOptions, setColumnOptions] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   function handleChange({ target }) {
     console.log(target.id);
@@ -13,6 +15,16 @@ function NumericFilters() {
     if (target.id === 'column-filter') setColumn(value);
     if (target.id === 'comparison-filter') setComparison(value);
     if (target.id === 'value-filter') setValueNumeric(value);
+  }
+
+  function removeColumnFilter() {
+    if (filters.filterByNumericValues !== undefined) {
+      const index = filters.filterByNumericValues.length - 1;
+      const newColumnOptions = columnOptions.filter((col) => (
+        filters.filterByNumericValues[index].column !== col
+      ));
+      setColumnOptions(newColumnOptions);
+    }
   }
 
   function handleClick() {
@@ -24,17 +36,27 @@ function NumericFilters() {
     } else {
       setFilters({ ...filters,
         filterByNumericValues: [{ column, comparison, value: valueNumeric }] });
+      console.log(filters);
     }
   }
+
+  useEffect(() => {
+    removeColumnFilter();
+  }, [filters]);
 
   return (
     <div>
       <select data-testid="column-filter" id="column-filter" onChange={ handleChange }>
-        <option value="population" selected>population</option>
-        <option value="orbital_period">orbital_period</option>
+        {columnOptions.map((columnOption, index) => (
+          <option key={ index } value={ columnOption }>
+            { columnOption }
+          </option>
+        ))}
+
+        {/* <option value="population" selected>population</option
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        <option value="surface_water">surface_water</option> */}
       </select>
       <select
         data-testid="comparison-filter"
