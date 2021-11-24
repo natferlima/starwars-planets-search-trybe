@@ -36,25 +36,39 @@ function PlanetsProvider({ children }) {
     }
   }
 
+  function filterNumeric(index) {
+    let dataFilterNumeric = [];
+    if (index === 0) {
+      dataFilterNumeric = data;
+    } else {
+      dataFilterNumeric = dataFilter;
+    }
+    return dataFilterNumeric;
+  }
+
   function filterByNumericValues() {
     let newData = [];
-    if (filters.filterByNumericValues !== undefined) {
-      if (filters.filterByNumericValues[0].comparison === 'menor que') {
-        newData = data.filter((planet) => (
-          Number(planet[filters.filterByNumericValues[0].column])
-          < Number(filters.filterByNumericValues[0].value)));
+    let dataFilterNumeric = [];
+    if (filters.filterByNumericValues !== undefined
+      && filters.filterByNumericValues.length !== 0) {
+      const index = filters.filterByNumericValues.length - 1;
+      dataFilterNumeric = filterNumeric(index);
+      if (filters.filterByNumericValues[index].comparison === 'menor que') {
+        newData = dataFilterNumeric.filter((planet) => (
+          Number(planet[filters.filterByNumericValues[index].column])
+          < Number(filters.filterByNumericValues[index].value)));
         setAux(true);
         setDataFilter(newData);
-      } else if (filters.filterByNumericValues[0].comparison === 'maior que') {
-        newData = data.filter((planet) => (
-          Number(planet[filters.filterByNumericValues[0].column])
-          > Number(filters.filterByNumericValues[0].value)));
+      } else if (filters.filterByNumericValues[index].comparison === 'maior que') {
+        newData = dataFilterNumeric.filter((planet) => (
+          Number(planet[filters.filterByNumericValues[index].column])
+          > Number(filters.filterByNumericValues[index].value)));
         setAux(true);
         setDataFilter(newData);
-      } else if (filters.filterByNumericValues[0].comparison === 'igual a') {
-        newData = data.filter((planet) => (
-          Number(planet[filters.filterByNumericValues[0].column])
-          === Number(filters.filterByNumericValues[0].value)));
+      } else if (filters.filterByNumericValues[index].comparison === 'igual a') {
+        newData = dataFilterNumeric.filter((planet) => (
+          Number(planet[filters.filterByNumericValues[index].column])
+          === Number(filters.filterByNumericValues[index].value)));
         setAux(true);
         setDataFilter(newData);
       }
